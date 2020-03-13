@@ -1,4 +1,4 @@
-﻿# Host: 198.50.238.42  (Version 5.5.5-10.2.23-MariaDB)
+
 # Date: 2020-03-13 14:46:25
 # Generator: MySQL-Front 6.0  (Build 2.20)
 
