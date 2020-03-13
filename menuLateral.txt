@@ -1,0 +1,41 @@
+//BUSCA O GRUPO DO USUÁRIO LOGADO
+sc_select(grp, "SELECT group_id FROM tb_sec_users_groups WHERE login = 'giovani'");
+[grupo_usuario] = $grp->fields[0];
+
+echo menu_itens_1();
+
+//BUSCA OS ITENS DE NÍVEL 1
+function menu_itens_1() {
+	$sql = "SELECT * FROM menu_itens_1 WHERE FIND_IN_SET(".[grupo_usuario].", grupos)";
+	sc_select(rs, $sql);
+	while(!$rs->EOF) {
+		$id 			= $rs->fields['id'];
+		$descricao 		= $rs->fields['descricao'];
+		$link 			= $rs->fields['link'] ?? "#";
+		$icone 			= $rs->fields['icone'] ?? "";
+		$submenu 		= $rs->fields['submenu'];
+		$target 		= $rs->fields['target'];
+			if ($submenu == 1) {
+				echo ' <li class="nav-item">
+						<a class="nav-link collapsed" href="'.$link.'" data-toggle="collapse" data-target="#collapse-'.$id.'" aria-expanded="true" aria-controls="collapseTwo">
+						  <i class="fas fa-fw '.$icone.'"></i>
+						  <span>'.$descricao.'</span>
+						</a>
+						<div id="collapse-'.$id.'" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+						  <div class="bg-white py-2 collapse-inner rounded">
+							<h6 class="collapse-header">Custom Components:</h6>';
+								echo subMenuLateral($id);
+						echo '</div>
+						</div>
+					  </li>';
+			} else {
+				echo '<li class="nav-item">
+						<a class="nav-link" href="../'.$link.'/index.php">
+						  <i class="fas fa-fw '.$icone.'"></i>
+						  <span>'.$descricao.'</span></a>
+					  </li>';
+			}
+		$rs->MoveNext();
+	}
+	$rs->Close();	
+}

@@ -1,0 +1,22 @@
+//BUSCA OS ITENS DE NÍVEL 2
+
+$sqll = "SELECT * FROM menu_itens_2 WHERE FIND_IN_SET(".[grupo_usuario].", grupos) AND id_item_1 = ".$id_item_1;
+sc_select(rss, $sqll);
+
+$sub_h6 = $rss->fields['h6'];
+$titulo = $sub_h6 ?? "";
+echo '<h6 class="collapse-header">'.$titulo.'</h6>';
+
+while(!$rss->EOF) {
+	$sub_id 			= $rss->fields['id'];
+	$sub_descricao 		= $rss->fields['descricao'];
+	$sub_link 			= $rss->fields['link'];
+	$sub_icone 			= $rss->fields['icone'];
+	$sub_submenu 		= $rss->fields['submenu'];
+	$sub_target 		= $rss->fields['target'];
+
+			echo '<a class="collapse-item" href="../'.$sub_link.'/index.php" target="CMIframe">'.$sub_descricao.'</a>';
+
+	$rss->MoveNext();
+}
+$rss->Close();
